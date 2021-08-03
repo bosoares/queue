@@ -13,38 +13,36 @@ Queue<T>::Queue(int size):
 };
 
 /**
- * Include new element in the last position of the queue
+ * Include new element in the last position of the queue.
+ * If the queue is full, the thread should blocks until
+ * an element is removed from the queue. 
 **/
 template <class T>
 void Queue<T>::Push(T element)
 {
-    if(Count() != Size())
-    {
+    std::unique_lock<std::mutex> ul(m);
+
+    cv.wait(ul,[&] { return (Count() != Size() )? true : false;}); //lock the thread in case the queue is full
         queue_vector.push_back(element);
-    }
-    else
-    {
-        std::cout << "Queue full... waiting for Pop" << std::endl;
-    }
+    cv.notify_one();
 };
 
 /**
- * Remove the first element of the queue
+ * Remove the first element of the queue.
+ * If the queue is empty, the thread should blocks until
+ * a new element is added to the queue. 
 **/
 template <class T>
 T Queue<T>::Pop()
 {
-    if (queue_vector.begin() == queue_vector.end())
-    {
-        return (T)NULL;
-    }
-    else
-    {
-        T popped;
-        popped = queue_vector[0];
+    std::unique_lock<std::mutex> ul(m);
+    
+    cv.wait(ul,[&] { return (Count()!= 0 )? true : false;}); //lock the thread in case the queue is empty
+        T popped_value = queue_vector[0];
         queue_vector.erase(queue_vector.begin(),queue_vector.begin()+1);
-        return popped;
-    }
+    cv.notify_one();
+    
+    return popped_value;
 };
 
 /**
