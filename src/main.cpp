@@ -6,8 +6,8 @@
 int main()
 {
     Queue<int> *myQueue = new Queue<int> (2);
-    std::cout << "Size() : " << myQueue->Size() << std::endl;
-    std::cout << "Count(): " << myQueue->Count() << std::endl;
+    // std::cout << "Size() : " << myQueue->Size() << std::endl;
+    // std::cout << "Count(): " << myQueue->Count() << std::endl;
 
     std::thread write_1(&Queue<int>::Push, myQueue, 1); //Push(1)
     std::thread read_1(&Queue<int>::Pop, myQueue);  //Pop()->1

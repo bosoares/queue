@@ -18,3 +18,11 @@ Implements a queue of a finite amount of elements to be used for multi-threaded 
 * make install
 * cd ../dist
 * ./myQueue
+* ./testmyQueue (Unit test)
+
+# NOTES
+1 - To activate a verbose mode, uncomment the following lines before Step 3:
+* src/include/queue.hpp - Line  81
+* src/include/queue.hpp - Line 118
+* src/main.cpp - Line 9
+* src/main.cpp - Line 10
