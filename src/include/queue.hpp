@@ -37,6 +37,10 @@ private:
 public:
     Queue(int size)
     {
+        if(size <= 0)   //Prevents Queue criation with size = 0
+        {
+            throw ("Invalid initializer value");
+        }
         head = NULL;
         tail = NULL;
         queueNumElemen = 0;
@@ -74,7 +78,7 @@ public:
                 }
                 
                 queueNumElemen++;
-                std::cout << "PUSH(" << element << ") - " << "Count(): " << queueNumElemen << std::endl;
+                //std::cout << "PUSH(" << element << ") - " << "Count(): " << queueNumElemen << std::endl;
 
             m_numelemen.unlock();
         cv.notify_one();
@@ -111,7 +115,7 @@ public:
 
                 queueNumElemen--;
 
-                std::cout << " POP(" << popped_value << ") - " << "Count(): " << queueNumElemen << std::endl;
+                //std::cout << " POP(" << popped_value << ") - " << "Count(): " << queueNumElemen << std::endl;
 
             m_numelemen.unlock();
         cv.notify_one();
